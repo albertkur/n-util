@@ -1,89 +1,103 @@
 import { given } from "@nivinjoseph/n-defensive";
 
-
-export class Duration
-{
+/**
+ * @static
+ * 
+ * @description Converts time value to a millisecond duration value.
+ */
+export class Duration {
     private readonly _ms: number;
-    
-    
-    private constructor(ms: number)
-    {
+
+
+    private constructor(ms: number) {
         given(ms, "ms").ensureHasValue().ensureIsNumber().ensure(t => t >= 0);
         this._ms = ms;
     }
-    
-    public static fromMilliSeconds(milliSeconds: number): Duration
-    {
+
+    public static fromMilliSeconds(milliSeconds: number): Duration {
         return new Duration(milliSeconds);
     }
-    
-    public static fromSeconds(seconds: number): Duration
-    {
+
+    /**
+     * @description Converts `seconds` into a millisecond value.
+     * 
+     * @param seconds - The seconds value being converted to milliseconds. 
+     * @returns The millisecond value.
+     */
+    public static fromSeconds(seconds: number): Duration {
         given(seconds, "seconds").ensureHasValue().ensureIsNumber();
-        
+
         return this.fromMilliSeconds(seconds * 1000);
     }
-    
-    public static fromMinutes(minutes: number): Duration
-    {
+
+    /**
+     * @description Converts `minutes` into a millisecond value.
+     * 
+     * @param minutes - The minutes value being converted to milliseconds. 
+     * @returns The millisecond value.
+     */
+    public static fromMinutes(minutes: number): Duration {
         given(minutes, "minutes").ensureHasValue().ensureIsNumber();
-        
+
         return this.fromSeconds(minutes * 60);
     }
-    
-    public static fromHours(hours: number): Duration
-    {
+
+    /**
+     * @description Converts `hours` into a millisecond value.
+     * 
+     * @param hours - The hours value being converted to milliseconds. 
+     * @returns The millisecond value.
+     */
+    public static fromHours(hours: number): Duration {
         given(hours, "hours").ensureHasValue().ensureIsNumber();
-        
+
         return this.fromMinutes(hours * 60);
     }
-    
-    public static fromDays(days: number): Duration
-    {
+
+    /**
+     * @description Converts `days` into a millisecond value.
+     * 
+     * @param days - The days value being converted to milliseconds. 
+     * @returns The millisecond value.
+     */
+    public static fromDays(days: number): Duration {
         given(days, "days").ensureHasValue().ensureIsNumber();
-        
+
         return this.fromHours(days * 24);
     }
-    
-    public static fromWeeks(weeks: number): Duration
-    {
+
+    public static fromWeeks(weeks: number): Duration {
         given(weeks, "weeks").ensureHasValue().ensureIsNumber();
-        
+
         return this.fromDays(weeks * 7);
     }
-    
-    public toMilliSeconds(round = false): number
-    {
+
+    public toMilliSeconds(round = false): number {
         const result = this._ms;
         return round ? Math.round(result) : result;
     }
-    
-    public toSeconds(round = false): number
-    {
+
+    public toSeconds(round = false): number {
         const result = this.toMilliSeconds() / 1000;
         return round ? Math.round(result) : result;
     }
 
-    public toMinutes(round = false): number
-    {
+    public toMinutes(round = false): number {
         const result = this.toSeconds() / 60;
         return round ? Math.round(result) : result;
     }
 
-    public toHours(round = false): number
-    {
+    public toHours(round = false): number {
         const result = this.toMinutes() / 60;
         return round ? Math.round(result) : result;
     }
 
-    public toDays(round = false): number
-    {
+    public toDays(round = false): number {
         const result = this.toHours() / 24;
         return round ? Math.round(result) : result;
     }
-    
-    public toWeeks(round = false): number
-    {
+
+    public toWeeks(round = false): number {
         const result = this.toDays() / 7;
         return round ? Math.round(result) : result;
     }
